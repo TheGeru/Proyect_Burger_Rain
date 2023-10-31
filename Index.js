@@ -14,7 +14,7 @@ app.set("view engine", "ejs");
 app.use(cors()); 
 app.use(session({
   name: "session",
-  keys: ["fsdfs"],
+  keys: ["asjdwi$!23as1aoasmdlk12"],
   maxAge: 24 * 60 * 60 * 1000 
 }));
 app.use("/", express.static(path.join(__dirname,"/public"))) 
