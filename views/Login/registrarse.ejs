@@ -1,0 +1,136 @@
+<%- include("../templates/encabezado") %>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Prompt:wght@700&display=swap');
+    .divider:after,
+    .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+    }
+    .h-custom {
+        height: calc(100% - 73px);
+    }
+    @media (max-width: 450px) {
+        .h-custom {
+            height: 100%;
+        }
+    }
+    section.vh-100 {
+        /* Establece la imagen de fondo */
+        background-image: url('https://img.freepik.com/fotos-premium/lluvia-hamburguesas-ciudad-rascacielos-hamburguesas-cayendo-cielo-ai_985124-5617.jpg?w=740'); /* Reemplaza 'ruta_de_tu_imagen.jpg' con la ruta real de tu imagen */
+        background-size: cover; /* Ajusta la imagen de fondo para que cubra toda la sección */
+        background-position: center; /* Centra la imagen de fondo */
+    }
+
+    .form-container {
+    background-color: rgba(255, 255, 255, 0.8); /* El último valor (0.8) determina la opacidad. Cuanto menor sea, más transparente será. */
+    padding: 20px; /* Añade espacio alrededor del formulario para que el fondo transparente sea visible */
+    border-radius: 10px; /* Opcional: agrega bordes redondeados para un efecto estético */
+    }
+
+
+    .text-document{
+        font-family: 'Prompt', sans-serif;
+        color: white;
+    }
+
+    .text-sub-document{
+        font-family: 'Prompt', sans-serif;
+        color: rgb(0, 0, 0);
+    }
+
+    
+</style>
+
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+            class="img-fluid" alt="Sample image"> -->
+        </div>
+        <div class="
+            col-md-8 
+            col-lg-6 
+            col-xl-4 
+            offset-xl-1
+            form-container">
+            
+          <form action="/registrarseENV" method="post" enctype="multipart/form-data">
+            <div class="
+                d-flex 
+                flex-column 
+                align-items-center 
+                justify-content-center 
+                justify-content-lg-start">
+                
+              <h1 class="text-document">Iniciar sesion</h1>
+            </div>
+  
+            <div class="divider d-flex align-items-center my-4">
+            </div>
+  
+            <!-- -----------------------------------------NOMBRE INPUT--------------------------------------->
+            <div class="form-outline mb-4">
+              <input 
+                    type="text" 
+                    id="nombre"
+                    name="nombre" 
+                    class="form-control form-control-lg"
+                    placeholder="Ingresa tu nombre de usuario" />
+
+              <label class="text-sub-document" for="form3Example3">Nombre</label>
+            </div>
+  
+            <!-- ---------------------------------------------USUARIO INPUT -------------------------------------->
+            <div class="form-outline mb-3">
+              <input 
+                type="text" 
+                id="usuario"
+                name="usuario" 
+                class="form-control form-control-lg"
+                placeholder="Ingresa tu password" />
+
+              <label class="text-sub-document" for="form3Example4">Nombre de Usuario</label>
+            </div>
+
+            <!-----------------------PASSWORD INPUT-------------------------------------------------------------->
+            <div class="form-outline mb-3">
+                <input 
+                  type="password" 
+                  id="password"
+                  name="password" 
+                  class="form-control form-control-lg"
+                  placeholder="Ingresa tu password" />
+  
+                <label class="text-sub-document" for="form3Example4">Password</label>
+              </div>
+            <!-- -------------------------------FOTO INPUT---------------------------------------------------- -->
+              <div class="form-outline mb-3">
+                <input 
+                  type="file" 
+                  id="foto"
+                  name="foto" 
+                  class="form-control form-control-lg"
+                  placeholder="Ingresa tu password" />
+  
+                <label class="text-sub-document" for="form3Example4">Foto</label>
+              </div>
+
+              
+            <!-- -----------APARTADO PARA IR A LA PANTALLA DE REGISTRO----------------------------------------- -->
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="submit" 
+              class="btn btn-warning btn-lg" 
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">
+              Registrar</button>
+
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+<%- include("../templates/pie") %>
