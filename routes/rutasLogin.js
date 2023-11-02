@@ -40,7 +40,7 @@ rutaLogin.post("/registrarseENV", subirArchivos(), async(req, res) =>{
     res.redirect("/");
 });
 
-
+//RUTA PARA VALIDAR EL ACCESO A LOS USUARIOS--------------------------------------
 rutaLogin.post("/validar", async (req, res) => {
     var { usuario, password } = req.body;
     var usuarioEncontrado = await buscarPorUsuario(usuario);
@@ -66,6 +66,7 @@ rutaLogin.post("/validar", async (req, res) => {
     }
   });
   
+  //DESLOGUEARSE
   rutaLogin.get("/logout", async (req, res) => {
     req.session = null;
     res.redirect("/");

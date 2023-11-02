@@ -1,7 +1,7 @@
 var rutaAdm = require("express").Router();
 var subirArchivos = require("../middlewares/subirArchivo");
 var subirProductos = require("../middlewares/subirProductos");
-var fs = require("fs");
+const fs = require("fs").promises;
 const{
     buscarPorID,
     buscarPorUsuario,
@@ -25,7 +25,7 @@ const{
     nuevoProducto
 } = require("../database/productosBD");
 
-/*COMIENZA DEFINICION DE RUTAS-------------------------------------------
+/*---- --- A PARTIR DE AQUI COMIENZA LA DEFINICION DE RUTAS-------------------------------------------
 -------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------* */
 
@@ -46,6 +46,7 @@ rutaAdm.get("/mostrarUsuarios", autorizado, async(req, res)=>{
       }
 });
 
+//RUTAS PARA OPCIONES DE REGISTRAR NUEVO PRODUCTO-------------------------------------
 rutaAdm.get("/nuevoProducto", (req, res)=>{
     res.render("admins/nuevoProducto");
 });
@@ -56,12 +57,13 @@ rutaAdm.post("/guardarProducto", subirProductos(),async(req, res)=>{
     res.redirect("/perfilADM");
 });
 
-rutaAdm.get("/productos/borrar/:id", async (req, res) => {
-    var producto = await buscarPorIDPro(req.params.id); // pordia ser await borrarUsuario(req.params.id);
-    res.render("productos/eliminarPro", { producto }); // res.redirect("/");
+//------RUTAS PARA OPCIONES DE BORRADO-------------------------------------------------
+rutaAdm.get("/borrarPr/:id", async (req, res) => {
+    var producto = await buscarPorIDPro(req.params.id);
+    res.render("admins/opBorrado", { producto }); // res.redirect("/");
   });
   
-  rutaAdm.post("/productos/borrar", async (req, res) => {
+  rutaAdm.post("/borrarDef", async (req, res) => {
     const productId = req.body.id; // Accede al id desde req.body
     console.log(productId);
   
@@ -82,11 +84,29 @@ rutaAdm.get("/productos/borrar/:id", async (req, res) => {
       await borrarProducto(productId);
       error = 0;
   
-      res.redirect("/productos/productos");
+      res.redirect("/perfilADM");
     } catch (error) {
       console.error("Error al borrar el producto o usuario:", error);
       res.status(500).send("Error al borrar el producto o usuario");
     }
+  });
+
+  //RUTAS PARA LAS OPCIONES DE EDITAR--------------------------------------------
+  rutaAdm.get("/editarPR/:id", async (req, res) => {
+    var producto = await buscarPorIDPro(req.params.id);
+    res.render("admins/editarProduct", { producto });
+  });
+
+  rutaAdm.post("/enviarMod", subirProductos(), async (req, res) => {
+    var producto = await buscarPorIDPro(req.body.id); // Obtener el usuario antes del if
+    if (req.file) {
+      req.body.foto = req.file.originalname;
+    } else {
+      req.body.foto = producto.foto; // Mantener la foto existente
+    }
+    console.log(req.body.foto);
+    var error = await modificarProducto(req.body);
+    res.redirect("/perfilADM");
   });
 
 module.exports= rutaAdm;
