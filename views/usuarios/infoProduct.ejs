@@ -169,19 +169,19 @@ a {
 </style>
 <section class="main-content">
     <div class="container">
-        <h1 class="text-center text-uppercase">*EJEMPLO DE DISEÑO*</h1>
+        <h1 class="text-center text-uppercase">*EJEMPLOS DE DISEÑO*</h1>
         <br>
         <br>
         <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-4">
                 <div class="food-card">
                     <div class="food-card_img">
-                        <img src="https://i.imgur.com/eFWRUuR.jpg" alt="">
+                        <img src="/uploadsProducts/<%= producto.foto %>" alt="Ilustracion del producto"/>
                         <a href="#!"><i class="far fa-heart"></i></a>
                     </div>
                     <div class="food-card_content">
                         <div class="food-card_title-section">
-                            <a href="#!" class="food-card_title">Double Cheese Potato Burger</a>
+                            <a href="#!" class="food-card_title"><%= producto.nombre %></a>
                             <a href="#!" class="food-card_author">Burger</a>
                         </div>
                         <div class="food-card_bottom-section">
@@ -189,14 +189,11 @@ a {
                                 <div>
                                     <span class="fa fa-fire"></span> 220 - 280 Kcal
                                 </div>
-                                <div class="pull-right">
-                                    <span class="badge badge-success">Veg</span>
-                                </div>
                             </div>
                             <hr>
                             <div class="space-between">
                                 <div class="food-card_price">
-                                    <span>5.99$</span>
+                                    <span><%= producto.precio %></span>
                                 </div>
                                 <div class="food-card_order-count">
                                     <div class="input-group mb-3">
@@ -217,12 +214,12 @@ a {
             <div class="col-sm-6 col-md-6 col-lg-6">
                 <div class="food-card food-card--vertical">
                     <div class="food-card_img">
-                        <img src="https://i.imgur.com/eFWRUuR.jpg" alt="">
+                        <img src="/uploadsProducts/<%= producto.foto %>" alt="Ilustracion del producto"/>
                         <a href="#!"><i class="fa fa-heart"></i></a>
                     </div>
                     <div class="food-card_content">
                         <div class="food-card_title-section">
-                            <a href="#!" class="food-card_title">Double Cheese Potato Burger</a>
+                            <a href="#!" class="food-card_title"><%= producto.nombre %></a>
                             <a href="#!" class="food-card_author">Burger</a>
                         </div>
                         <div class="food-card_bottom-section">
@@ -230,14 +227,11 @@ a {
                                 <div>
                                     <span class="fa fa-fire"></span> 220 - 280 Kcal
                                 </div>
-                                <div class="pull-right">
-                                    <span class="badge badge-success">Veg</span>
-                                </div>
                             </div>
                             <hr>
                             <div class="space-between">
                                 <div class="food-card_price">
-                                    <span>5.99$</span>
+                                    <span><%= producto.precio %></span>
                                 </div>
                                 <div class="food-card_order-count">
                                     <div class="input-group mb-3">

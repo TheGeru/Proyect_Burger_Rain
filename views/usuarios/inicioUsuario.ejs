@@ -5,6 +5,7 @@
     .text-document{
         font-family: 'Prompt', sans-serif;
         color: rgb(0, 0, 0);
+        text-align: center;
         }
 
         .text-sub-document{
@@ -16,7 +17,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h1 class="text-document">Menu de clientes</h1>
+                <h1 class="text-document">Menu</h1>
             </div>
             <div class="card-body">
                 <table class="table table-hover">
@@ -42,7 +43,7 @@
                                 alt="Foto de <%= productos.nombre %>"
                               /></td>
                             <td>
-                                <a href="/infoProd">Comprar</a>
+                                <a href="/infoProd/<%= producto.id %>">Comprar</a>
                             </td>
                         </tr>
                         <%

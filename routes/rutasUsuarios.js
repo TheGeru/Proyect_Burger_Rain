@@ -24,14 +24,19 @@ const{
 /*COMIENZO DE DEFINICION DE RUTAS----------------------
 ------------------------------------------------------------------
 --------------------------------------------------------------------------* */
-
-rutaUsu.get("/perfilUsu", async(req, res)=>{
+rutaUsu.get("/perfilUsuario", async(req, res)=>{
     var productos = await mostrarProductos();
     res.render("usuarios/inicioUsuario", {productos});
 });
 
-rutaUsu.get("/infoProd", (req, res)=>{
-    res.render("usuarios/infoProduct");
+rutaUsu.get("/opciones", (req, res)=>{
+    //var usuario = req.session.usuario;
+    res.render("usuarios/OpcionesUsuario");
+});
+
+rutaUsu.get("/infoProd/:id", async(req, res)=>{
+    var producto = await buscarPorIDPro(req.params.id);
+    res.render("usuarios/infoProduct",{producto});
 });
 
 module.exports= rutaUsu;
