@@ -23,7 +23,8 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th style="display: none;">Id</th>
+                            <th>Descripcion</th>
                             <th>Nombre</th>
                             <th>Precio</th>
                             <th>Foto</th>
@@ -35,10 +36,13 @@
                         productos.forEach((producto)=>{
                         %>
                         <tr>
-                            <td><%= producto.id %></td>
+                            <td style="display: none;"><%= producto.id %></td>
+                            <td><%= producto.descripcion %></td>
                             <td><%= producto.nombre %></td>
                             <td><%= producto.precio %></td>
                             <td><img
+                                width="100px"
+                                height="100px"
                                 src="/uploadsProducts/<%= producto.foto %>"
                                 alt="Foto de <%= productos.nombre %>"
                               /></td>

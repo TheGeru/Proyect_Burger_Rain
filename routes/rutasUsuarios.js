@@ -7,6 +7,7 @@ const{
     mostrarUsuarios,
     modificarUsuario,
     verificarPassword,
+    encontrarFoto
 }=require("../database/usuariosBD");
 
 const{
@@ -24,9 +25,12 @@ const{
 /*COMIENZO DE DEFINICION DE RUTAS----------------------
 ------------------------------------------------------------------
 --------------------------------------------------------------------------* */
-rutaUsu.get("/perfilUsuario", async(req, res)=>{
+rutaUsu.get("/perfilUsuario", autorizado, async(req, res)=>{
     var productos = await mostrarProductos();
-    res.render("usuarios/inicioUsuario", {productos});
+    var usuario = req.session.usuario;
+    var fotoPerfil = req.session.foto;
+    console.log(fotoPerfil);
+    res.render("usuarios/inicioUsuario", {productos, usuario, fotoPerfil});
 });
 
 rutaUsu.get("/opciones", (req, res)=>{
@@ -36,7 +40,13 @@ rutaUsu.get("/opciones", (req, res)=>{
 
 rutaUsu.get("/infoProd/:id", async(req, res)=>{
     var producto = await buscarPorIDPro(req.params.id);
-    res.render("usuarios/infoProduct",{producto});
+    console.log("datos obtenidos: ", producto);
+    var usuario = req.session.usuario;
+    res.render("usuarios/infoProduct",{producto, usuario});
+});
+
+rutaUsu.get("/profileUser", async(req, res)=>{
+
 });
 
 module.exports= rutaUsu;

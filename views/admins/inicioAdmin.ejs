@@ -23,10 +23,13 @@
                     <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Status</th>
+                            <th>Descripcion</th>
                             <th>Nombre</th>
                             <th>Precio</th>
                             <th>Foto</th>
-                            <th>Editar / Opciones De Borrado</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,17 +38,21 @@
                         %>
                         <tr>
                             <td><%= producto.id %></td>
+                            <td><%= producto.status %></td>
+                            <td><%= producto.descripcion %></td>
                             <td><%= producto.nombre %></td>
                             <td><%= producto.precio %></td>
                             <td><img
-                                width="100px"
-                                height="100px"
+                                width="150px"
+                                height="150px"
                                 src="/uploadsProducts/<%= producto.foto %>"
                                 alt="Foto de <%= productos.nombre %>"
                               /></td>
                             <td>
-                                <a href="/editarPR/<%= producto.id %>">Editar |</a>
-                                <a href="/borrarPr/<%= producto.id %>">Borrar</a>
+                                <a href="/editarPR/<%= producto.id %>">Editar</a>
+                            </td>
+                            <td>
+                                <a href="/borrarPr/<%= producto.id %>/<%= usuario %>">Eliminar</a>
                             </td>
                         </tr>
                         <%

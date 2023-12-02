@@ -9,6 +9,7 @@ const{
     mostrarUsuarios,
     modificarUsuario,
     verificarPassword,
+    encontrarFoto
 }=require("../database/usuariosBD");
 
 const{
@@ -22,24 +23,29 @@ const{
     buscarPorIDPro,
     modificarProducto,
     borrarProducto,
-    nuevoProducto
+    nuevoProducto,
+    mostrarInventario
 } = require("../database/productosBD");
+
 
 /*---- --- A PARTIR DE AQUI COMIENZA LA DEFINICION DE RUTAS-------------------------------------------
 -------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------* */
 
 //RENDERIZADO DE LA PLANTILLA DE ADMIN
-rutaAdm.get("/perfilADM", async(req, res)=>{
-    var productos = await mostrarProductos();
-    res.render("admins/inicioAdmin", {productos});
+rutaAdm.get("/perfilADM", autorizado, async(req, res)=>{
+    var productos = await mostrarInventario();
+    var usuario=req.session.admin;
+    var foto = await encontrarFoto(usuario);
+    res.render("admins/inicioAdmin", {productos, usuario, foto});
 });
 
 rutaAdm.get("/mostrarUsuarios", autorizado, async(req, res)=>{
     try {
         // Lógica para obtener los usuarios
         var usuarios = await mostrarUsuarios();
-        res.render("admins/usuariosAdmin", { usuarios: usuarios }); // Pasa los usuarios a la plantilla
+        var usuario=req.session.admin;
+        res.render("admins/usuariosAdmin", { usuarios, usuario }); // Pasa los usuarios a la plantilla
       } catch (error) {
         console.log("Error al obtener usuarios: " + error);
         res.render("Login/login");
@@ -47,8 +53,10 @@ rutaAdm.get("/mostrarUsuarios", autorizado, async(req, res)=>{
 });
 
 //RUTAS PARA OPCIONES DE REGISTRAR NUEVO PRODUCTO-------------------------------------
-rutaAdm.get("/nuevoProducto", (req, res)=>{
-    res.render("admins/nuevoProducto");
+rutaAdm.get("/nuevoProducto", autorizado, async(req, res)=>{
+  var usuario=req.session.admin;
+  var foto = encontrarFoto(usuario);
+    res.render("admins/nuevoProducto", {usuario, foto});
 });
 
 rutaAdm.post("/guardarProducto", subirProductos(),async(req, res)=>{
@@ -58,9 +66,11 @@ rutaAdm.post("/guardarProducto", subirProductos(),async(req, res)=>{
 });
 
 //------RUTAS PARA OPCIONES DE BORRADO-------------------------------------------------
-rutaAdm.get("/borrarPr/:id", async (req, res) => {
+rutaAdm.get("/borrarPr/:id/:usuario", async (req, res) => {
     var producto = await buscarPorIDPro(req.params.id);
-    res.render("admins/opBorrado", { producto }); // res.redirect("/");
+    console.log(producto);
+    var usuario=req.session.admin;
+    res.render("admins/opBorrado", { producto, usuario }); // res.redirect("/");
   });
   
   rutaAdm.post("/borrarDef", async (req, res) => {
@@ -93,8 +103,9 @@ rutaAdm.get("/borrarPr/:id", async (req, res) => {
 
   //RUTAS PARA LAS OPCIONES DE EDITAR--------------------------------------------
   rutaAdm.get("/editarPR/:id", async (req, res) => {
+    var usuario = req.session.admin;
     var producto = await buscarPorIDPro(req.params.id);
-    res.render("admins/editarProduct", { producto });
+    res.render("admins/editarProduct", { producto, usuario });
   });
 
   rutaAdm.post("/enviarMod", subirProductos(), async (req, res) => {

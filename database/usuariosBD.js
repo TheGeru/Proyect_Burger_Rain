@@ -1,13 +1,13 @@
 var conexion = require("./conexionUsu");
 // var conexionUsuarios=require("./conexion").conexion;
 var Usuario = require("../models/Usuario");
-
 var crypto = require("crypto");
 
 var {
   encriptarPassword,
   compararPassword,
 } = require("../middlewares/funcionesPassword");
+const { log } = require("console");
 
 async function mostrarUsuarios() {
   var users = [];
@@ -57,6 +57,7 @@ async function nuevoUsuario(datos) {
       error = 0;
     } catch (err) {
       console.log("Error al capturar nuevo usuario" + err);
+      error = 1;
     }
   }
   return error;
@@ -98,7 +99,7 @@ async function borrarUsuario(id) {
 }
 
 async function buscarPorUsuario(usuario) {
-  var user = null; // Inicializar user como null
+  var user = null; // aqui inicializamos el valor del usuario encontrado como null
   try {
     var usuarios = await conexion.where("usuario", "==", usuario).get();
     usuarios.forEach((usuario) => {
@@ -115,15 +116,47 @@ async function buscarPorUsuario(usuario) {
   return user;
 }
 
-async function verificarPassword(password, hash, salt) {
-  if (typeof salt !== "string") {
-    throw new Error("Salt debe ser una cadena");
+async function encontrarFoto(usuario) {
+  var foto = null; // aqui inicializamos el valor del usuario encontrado como null
+  try {
+    var foto = await conexion.where("usuario", "==", usuario).get();
+    foto.forEach((usuario) => {
+      var fotoObjeto = new Usuario(usuario.foto, usuario.data());
+      console.log("name photo" + fotoObjeto.foto);
+      if (fotoObjeto && fotoObjeto.bandera === 0) {
+        // Comprobar si usuarioObjeto no es null o undefined
+        foto = fotoObjeto.obtenerData; //
+      }
+    });
+  } catch (err) {
+    console.log("Error al recuperar informacion del usuario: " + err);
   }
-  var hashEvaluar = crypto
-    .scryptSync(password, salt, 100000, 64, "sha512")
-    .toString("hex");
-  return hashEvaluar === hash;
+  return foto;
 }
+
+
+async function verificarPassword(password, hash, salt) {
+  try {
+     if (typeof salt !== "string") {
+       throw new Error("Salt debe ser una cadena");
+     }
+     var hashEvaluar = crypto.scryptSync(password, salt, 100000, 64, {outputKey: "sha512"}).toString("hex");
+ 
+     // Uso de comparación estricta (===)
+     if (hashEvaluar === hash) {
+       console.log("Las contraseñas coinciden");
+       return true;
+     }
+ 
+     console.log("Las contraseñas no coinciden");
+     return false;
+  } catch (err) {
+     console.error("Error al verificar la contraseña:", err);
+     return false;
+  }
+ }
+
+
 
 
 module.exports = {
@@ -134,4 +167,5 @@ module.exports = {
   borrarUsuario,
   buscarPorUsuario,
   verificarPassword,
+  encontrarFoto
 };

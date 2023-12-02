@@ -2,6 +2,13 @@
 <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap);
 
+    @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Prompt:wght@700&display=swap');
+
+    .text-document{
+        font-family: 'Prompt', sans-serif;
+        color: rgb(0, 0, 0);
+    }
+
 body {
     background: #f9f9f9;
     font-family: "roboto", sans-serif;
@@ -21,15 +28,15 @@ a {
     border-radius: 5px;
     overflow: hidden;
     margin-bottom: 30px;
-    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    -webkit-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.40);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
     -webkit-transition: 0.1s;
     transition: 0.1s;
 }
 
 .food-card:hover {
     -webkit-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.21);
 }
 
 .food-card .food-card_img {
@@ -169,63 +176,25 @@ a {
 </style>
 <section class="main-content">
     <div class="container">
-        <h1 class="text-center text-uppercase">*EJEMPLOS DE DISEÑO*</h1>
-        <br>
+        <h1 class="text-center text-uppercase text-document">Detalles del Producto</h1>
         <br>
         <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-4">
                 <div class="food-card">
                     <div class="food-card_img">
                         <img src="/uploadsProducts/<%= producto.foto %>" alt="Ilustracion del producto"/>
-                        <a href="#!"><i class="far fa-heart"></i></a>
-                    </div>
-                    <div class="food-card_content">
-                        <div class="food-card_title-section">
-                            <a href="#!" class="food-card_title"><%= producto.nombre %></a>
-                            <a href="#!" class="food-card_author">Burger</a>
-                        </div>
-                        <div class="food-card_bottom-section">
-                            <div class="space-between">
-                                <div>
-                                    <span class="fa fa-fire"></span> 220 - 280 Kcal
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="space-between">
-                                <div class="food-card_price">
-                                    <span><%= producto.precio %></span>
-                                </div>
-                                <div class="food-card_order-count">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-outline-secondary minus-btn" type="button" id="button-addon1"><i class="fa fa-minus"></i></button>
-                                        </div>
-                                        <input type="text" class="form-control input-manulator" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value="0">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary add-btn" type="button" id="button-addon1"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-6">
-                <div class="food-card food-card--vertical">
-                    <div class="food-card_img">
-                        <img src="/uploadsProducts/<%= producto.foto %>" alt="Ilustracion del producto"/>
+                        <!--OPCION PARA AGREGAR EL PRODUCTO AL CARRITO DE COMPRAS-->
                         <a href="#!"><i class="fa fa-heart"></i></a>
                     </div>
                     <div class="food-card_content">
                         <div class="food-card_title-section">
                             <a href="#!" class="food-card_title"><%= producto.nombre %></a>
-                            <a href="#!" class="food-card_author">Burger</a>
+                            <a class="food-card_author">Hamburguesa</a>
                         </div>
                         <div class="food-card_bottom-section">
                             <div class="space-between">
                                 <div>
-                                    <span class="fa fa-fire"></span> 220 - 280 Kcal
+                                    <span class="fa fa-fire"></span><%= producto.descripcion %>
                                 </div>
                             </div>
                             <hr>
@@ -249,7 +218,5 @@ a {
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </section>
 <%- include("../templates/pie") %>

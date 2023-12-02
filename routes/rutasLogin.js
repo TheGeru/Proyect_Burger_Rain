@@ -3,7 +3,8 @@ var subirArchivos = require("../middlewares/subirArchivo");
 const {
     buscarPorUsuario,
     verificarPassword,
-    nuevoUsuario
+    nuevoUsuario,
+    encontrarFoto
 } = require("../database/usuariosBD");
 
 const {
@@ -34,31 +35,31 @@ rutaLogin.get("/registrar", async(req, res)=>{
 //RUTA QUE PROCESA EL REGISTRO---------------------------------------------
 rutaLogin.post("/registrarseENV", subirArchivos(), async(req, res) =>{
     req.body.foto = req.file.originalname;
-    const { salt, hash } = encriptarPassword(req.body.password);
-    req.body.password = hash;
-    req.body.salt = salt;
     var error = await nuevoUsuario(req.body);
+    console.log(error);
     res.redirect("/");
 });
 
+
 //RUTA PARA VALIDAR EL ACCESO A LOS USUARIOS--------------------------------------
 rutaLogin.post("/validar", async (req, res) => {
+  
     var { usuario, password } = req.body;
     var usuarioEncontrado = await buscarPorUsuario(usuario);
-    var productos = await mostrarProductos();
+  
     if (usuarioEncontrado) {
-      var resultado = await verificarPassword(password, 
-        usuarioEncontrado.password, usuarioEncontrado.salt
-      );
-      if (resultado) {  
+      var resultado = await verificarPassword(password, usuarioEncontrado.password, usuarioEncontrado.salt);
+      if (resultado) {
+        console.log(resultado); 
         if (usuarioEncontrado.admin) {
           req.session.admin = req.body.usuario;
           res.redirect("/perfilADM");
         }else{
           req.session.usuario = req.body.usuario; 
-          res.redirect("perfilUsuario");
+          res.redirect("/perfilUsuario");
         }
       } else {
+        console.log("no entro");
         res.render("Login/login", { mensaje: "La contraseña que ingresaste : "+password+" es incorecta " });
       }
     } else {

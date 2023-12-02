@@ -8,8 +8,14 @@
         </div>
         <div class="card-body">
             <input type="hidden" name="id" id="id" value="<%= producto.id %>">
+            <label class="text-sub-document">Nombre del producto</label>
             <input class="form-control mb-3" type="text" value="<%= producto.nombre %>" name="nombre" id="nombre" placeholder="Nombre" autofocus>
+            <label class="text-sub-document">Precio</label>
             <input class="form-control mb-3" type="text" value="<%= producto.precio %>" name="precio" id="precio" placeholder="Precio" >
+            <label class="text-sub-document">Estado del producto</label>
+            <input class="form-control mb-3" type="number" value="<%= producto.status %>" name="status" id="status" min="0" max="1">
+            <label class="text-sub-document">Descripcion del producto</label>
+            <input class="form-control mb-3" type="text" value="<%= producto.descripcion %>" name="descripcion" id="descripcion">
             <p>Imagen Actual</p>
             <div class="avatar-container text-center align-content-center">
                 <img
@@ -19,7 +25,7 @@
               alt="<%= producto.foto %>"
               width="150px"
             />
-            <br />
+            <br/>
             </div>
             <input class="form-control mb-3" type="file" name="foto" id="foto" placeholder="Foto" >
         </div>
