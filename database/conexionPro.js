@@ -9,7 +9,7 @@ if (!admin.apps.length) {
     });
  }else {
     admin.app();
- }
+ } 
 
 var db = admin.firestore();
 var conexionProBD = db.collection("productosBD");  

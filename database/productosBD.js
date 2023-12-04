@@ -23,7 +23,7 @@ async function mostrarInventario() {
 /*ESTA FUNCION SOLO SE IMPLEMENTA DEL LADO DEL CLIENTE MIENTRAS QUE DEL LADO DE LOS ADMINISTRADORES
 SE IMPLEMENTA LA FUNCION DE MOSTRAR INVENTARIO*/
 
-var productos = [];//VARIABLE DECLARADA DE FORMA GLOBAL PA QUE JALE XD
+var productos = [];//VARIABLE DECLARADA DE FORMA GLOBAL
 function processProducts(index, filterProducts) {
   if (index < productos.length) {
     var productoInstancia = new Producto(
@@ -36,7 +36,7 @@ function processProducts(index, filterProducts) {
     processProducts(index + 1, filterProducts);
   }
 }
-/*la funcion processProducts sirve para evitar errores de apilacion al momento de itarar en lo
+/*la funcion processProducts sirve para evitar errores de apilacion al momento de iterar en lo
 que era el forEach, esto me permite realizar un filtro en los registros para solo mostrar aquellos
 que tengan el estado de 0, creo que podria mejorarse*/
 async function mostrarProductos() {

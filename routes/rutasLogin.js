@@ -4,23 +4,13 @@ const {
     buscarPorUsuario,
     verificarPassword,
     nuevoUsuario,
-    encontrarFoto
+    buscarPorID
 } = require("../database/usuariosBD");
-
-const {
-    encriptarPassword,
-    autorizado,
-    admin
-} = require("../middlewares/funcionesPassword");
-const { mostrarProductos } = require("../database/productosBD");
-
-
 
 /*COMIENZO DE LA DEINICION DE RUTAS--------------------------------
 ...................................................................................
 ......................................................:).......................... 
 */
-
 
 /*Defininimos la ruta de INICIO*/
 rutaLogin.get("/", (req, res)=>{
@@ -43,14 +33,11 @@ rutaLogin.post("/registrarseENV", subirArchivos(), async(req, res) =>{
 
 //RUTA PARA VALIDAR EL ACCESO A LOS USUARIOS--------------------------------------
 rutaLogin.post("/validar", async (req, res) => {
-  
     var { usuario, password } = req.body;
     var usuarioEncontrado = await buscarPorUsuario(usuario);
-  
     if (usuarioEncontrado) {
       var resultado = await verificarPassword(password, usuarioEncontrado.password, usuarioEncontrado.salt);
       if (resultado) {
-        console.log(resultado); 
         if (usuarioEncontrado.admin) {
           req.session.admin = req.body.usuario;
           res.redirect("/perfilADM");

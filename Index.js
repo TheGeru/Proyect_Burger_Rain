@@ -3,6 +3,7 @@ var cors = require("cors");
 var rutasLogin = require("./routes/rutasLogin");
 var rutasClientes = require("./routes/rutasUsuarios");
 var rutasAministrador = require("./routes/rutasAdmin");
+var rutasCarrito = require("./routes/rutasCarrito");
 var path = require("path");
 
 var session = require("cookie-session");
@@ -20,6 +21,7 @@ app.use(session({
 app.use("/", express.static(path.join(__dirname,"/public"))) 
 app.use(express.urlencoded({ extended: true })); // para recibir datos de formularios
 app.use("/", rutasLogin);
+app.use("/", rutasCarrito);
 app.use("/", rutasAministrador);
 app.use("/", rutasClientes);
 

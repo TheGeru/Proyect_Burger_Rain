@@ -1,18 +1,16 @@
 var conexion = require("./conexionUsu");
-// var conexionUsuarios=require("./conexion").conexion;
 var Usuario = require("../models/Usuario");
 var crypto = require("crypto");
 
 var {
   encriptarPassword,
-  compararPassword,
 } = require("../middlewares/funcionesPassword");
 const { log } = require("console");
 
 async function mostrarUsuarios() {
   var users = [];
   try {
-    var usuarios = await conexion.get(); //trae toda la info de la tabla
+    var usuarios = await conexion.get();
     usuarios.forEach((usuario) => {
       var user = new Usuario(usuario.id, usuario.data());
       
@@ -25,14 +23,13 @@ async function mostrarUsuarios() {
       "Error al recuperar usuarios en la base de datos DE USUARIOS" + err
     );
   }
-  //console.log(users);
   return users;
 }
 
 async function buscarPorID(id) {
   var user = "";
   try {
-    var usuario = await conexion.doc(id).get(); // doc como registro en mysql
+    var usuario = await conexion.doc(id).get();
     var usuarioObjeto = new Usuario(usuario.id, usuario.data());
     if (usuarioObjeto.bandera == 0) {
       user = usuarioObjeto.obtenerData;
@@ -64,19 +61,27 @@ async function nuevoUsuario(datos) {
 }
 
 async function modificarUsuario(datos) {
-  var usuarioBuscar = await buscarPorID(datos.id);
-  if (usuarioBuscar != "") {
+  console.log("Datos recibidos", datos);
+  var error = 1;
+  var respuestaBuscar = await buscarPorID(datos.id);
+  if (respuestaBuscar != "") {
+    if(datos.password == ""){
+      datos.password=datos.passwordViejo;
+      datos.salt=datos.saltViejo;
+    }
+    else{
+      var {salt, hash}=encriptarPassword(datos.password);
+      datos.password=hash;
+      datos.salt=salt;
+    }
     var user = new Usuario(datos.id, datos);
-    var error = 1;
-    // console.log(user);
     if (user.bandera == 0) {
       try {
-        await conexion.doc(user.id).set(user.obtenerData);
-        console.log("Registro actualizado");
+        await conexion.doc(user.id).set(user.obtenerDatos);
+        console.log("Modificado");
         error = 0;
       } catch (err) {
-        console.log("Error al modificar usuario" + err);
-        throw err; // Lanzar el error para que se propague hacia arriba
+        console.log("Error al modificar usuario: " + err);
       }
     }
   }
@@ -106,8 +111,7 @@ async function buscarPorUsuario(usuario) {
       var usuarioObjeto = new Usuario(usuario.id, usuario.data());
       console.log("id " + usuarioObjeto.id);
       if (usuarioObjeto && usuarioObjeto.bandera === 0) {
-        // Comprobar si usuarioObjeto no es null o undefined
-        user = usuarioObjeto.obtenerData; //
+        user = usuarioObjeto.obtenerData; 
       }
     });
   } catch (err) {
@@ -115,26 +119,6 @@ async function buscarPorUsuario(usuario) {
   }
   return user;
 }
-
-async function encontrarFoto(usuario) {
-  var foto = null; // aqui inicializamos el valor del usuario encontrado como null
-  try {
-    var foto = await conexion.where("usuario", "==", usuario).get();
-    foto.forEach((usuario) => {
-      var fotoObjeto = new Usuario(usuario.foto, usuario.data());
-      console.log("name photo" + fotoObjeto.foto);
-      if (fotoObjeto && fotoObjeto.bandera === 0) {
-        // Comprobar si usuarioObjeto no es null o undefined
-        foto = fotoObjeto.obtenerData; //
-      }
-    });
-  } catch (err) {
-    console.log("Error al recuperar informacion del usuario: " + err);
-  }
-  return foto;
-}
-
-
 async function verificarPassword(password, hash, salt) {
   try {
      if (typeof salt !== "string") {
@@ -167,5 +151,4 @@ module.exports = {
   borrarUsuario,
   buscarPorUsuario,
   verificarPassword,
-  encontrarFoto
 };

@@ -1,10 +1,8 @@
 var rutaCard = require("express").Router();
-const ps = require("ps").promises;
-const{
-    mostrarProductos,
-    buscarPorIDPro,
-    modificarProducto,
-    borrarProducto,
-    nuevoProducto
-} = require("../database/productosBD");
+var subirArchivos = require("../middlewares/shoppingCar");
+const fs = require("fs").promises;
+const {
+    
+} = require("../database/carrito");
 
+module.exports = rutaCard;

@@ -237,7 +237,7 @@
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- Collection of nav links, forms, and other content for toggling -->
+        
         <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
             <form class="navbar-form form-inline">
                 <div class="input-group search-box">
@@ -252,10 +252,10 @@
                 <div class="nav-item dropdown">
                     <a href="#" 
                             data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img
-                            src="" class="avatar"
+                            src="/uploads/<%= fotoAdmin %>" class="avatar"
                             alt="Avatar"><%= usuario %><b class="caret"></b></a>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
+                        <a href="/profileAdmin" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
                         <div class="divider dropdown-divider"></div>
                         <a href="/logout" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a>
                     </div>
